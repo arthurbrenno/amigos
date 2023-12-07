@@ -91,37 +91,28 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 // Gravando no banco de dados
-                DbAmigosDAO dao = new DbAmigosDAO(getBaseContext());
-                boolean sucesso;
-                if(amigoAlterado != null) {
-                    sucesso = dao.salvar(amigoAlterado.getId(), nome, celular, 2);
-                } else {
-                    sucesso = dao.salvar(nome, celular, 1);
-                }
-
                 // Sincronizando os campos com o contexto
-                EditText edtNome = (EditText) findViewById (R.id.edtNome);
+                DbAmigosDAO dao     = new DbAmigosDAO(getBaseContext());
+                EditText edtNome    = (EditText) findViewById (R.id.edtNome);
                 EditText edtCelular = (EditText) findViewById (R.id.edtCelular);
 
                 // Adaptando atributos
-                String nome = edtNome.getText().toString();
+                String nome    = edtNome.getText().toString();
                 String celular = edtCelular.getText().toString();
-                int situacao = 1;
+                int situacao   = 1;
 
-// Gravando no banco de dados
-                DbAmigosDAO dao = new DbAmigosDAO(getBaseContext());
                 boolean sucesso = dao.salvar(nome, celular, situacao);
                 if (sucesso) {
                     DbAmigo amigo = dao.ultimoAmigo();
 
-                    if(amigoAlterado != null) {
+                    if (amigoAlterado != null) {
                         adapter.atualizarAmigo(amigo);
                         amigoAlterado = null;
                         configurarRecycler();
                     } else {
                         adapter.inserirAmigo(amigo);
                     }
-
+                }
                 if (sucesso)
                 {
                     DbAmigo amigo = dao.ultimoAmigo();
