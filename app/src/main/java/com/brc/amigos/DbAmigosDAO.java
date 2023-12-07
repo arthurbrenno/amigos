@@ -21,7 +21,6 @@ public class DbAmigosDAO {
         return salvar(0, nome, celular, status);
     }
 
-
     public boolean salvar(int id, String nome, String celular, int status){
         ContentValues cv = new ContentValues();
         cv.put("Nome", nome);
@@ -34,7 +33,6 @@ public class DbAmigosDAO {
             return gw.getDatabase().insert(TABLE_AMIGOS, null, cv) > 0;
         }
     }
-
 
     public List<DbAmigo> listarAmigos(){
         List<DbAmigo> amigos = new ArrayList<>();
@@ -100,8 +98,5 @@ public class DbAmigosDAO {
     public boolean excluir(int id){
         return gw.getDatabase().delete(TABLE_AMIGOS, "ID=?", new String[]{ id + "" }) > 0;
     }
-
-
-
 
 }
