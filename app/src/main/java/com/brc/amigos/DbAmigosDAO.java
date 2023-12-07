@@ -99,4 +99,9 @@ public class DbAmigosDAO {
         return gw.getDatabase().delete(TABLE_AMIGOS, "ID=?", new String[]{ id + "" }) > 0;
     }
 
+    public boolean excluirTemp(int id){
+        Cursor teste = gw.getDatabase().rawQuery("UPDATE Amigos SET status = 30 WHERE AMIGO = " + id, null);
+        return gw.getDatabase().delete(TABLE_AMIGOS, "ID=?", new String[]{ id + "" }) > 0;
+    }
+
 }
