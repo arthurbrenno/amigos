@@ -86,57 +86,55 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button btnSalvar = (Button)findViewById(R.id.btnSalvar);
-        btnSalvar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnSalvar.setOnClickListener(view -> {
 
-                // Gravando no banco de dados
-                // Sincronizando os campos com o contexto
-                DbAmigosDAO dao     = new DbAmigosDAO(getBaseContext());
-                EditText edtNome    = (EditText) findViewById (R.id.edtNome);
-                EditText edtCelular = (EditText) findViewById (R.id.edtCelular);
+            // Gravando no banco de dados
+            // Sincronizando os campos com o contexto
+            DbAmigosDAO dao     = new DbAmigosDAO(getBaseContext());
+            EditText edtNome    = (EditText) findViewById (R.id.edtNome);
+            EditText edtCelular = (EditText) findViewById (R.id.edtCelular);
 
-                // Adaptando atributos
-                String nome    = edtNome.getText().toString();
-                String celular = edtCelular.getText().toString();
-                int situacao   = 1;
+            // Adaptando atributos
+            String nome    = edtNome.getText().toString();
+            String celular = edtCelular.getText().toString();
+            int situacao   = 1;
 
-                boolean sucesso = dao.salvar(nome, celular, situacao);
-                if (sucesso) {
-                    DbAmigo amigo = dao.ultimoAmigo();
+            boolean sucesso = dao.salvar(nome, celular, situacao);
+            if (sucesso) {
+                DbAmigo amigo = dao.ultimoAmigo();
 
-                    if (amigoAlterado != null) {
-                        adapter.atualizarAmigo(amigo);
-                        amigoAlterado = null;
-                        configurarRecycler();
-                    } else {
-                        adapter.inserirAmigo(amigo);
-                    }
-                }
-                if (sucesso)
-                {
-                    DbAmigo amigo = dao.ultimoAmigo();
+                if (amigoAlterado != null) {
+                    adapter.atualizarAmigo(amigo);
+                    amigoAlterado = null;
+                    configurarRecycler();
+                } else {
                     adapter.inserirAmigo(amigo);
-
-                    Snackbar.make(view, "Dados de ["+nome+"] salvos com sucesso!", Snackbar.LENGTH_LONG)
-                            .setAction("Ação", null).show();
-
-                    // SE NÃO FUNCIONAR, COMENTAR DESSA LINHA PRA BAIXO
-                    // Inicializando os campos do contexto
-                    edtNome.setText("");
-                    edtCelular.setText("");
-
-                    // Atualizando visibilidades
-                    findViewById(R.id.include_listagem).setVisibility(View.VISIBLE);
-                    findViewById(R.id.include_cadastro).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.fab).setVisibility(View.VISIBLE);
-
                 }
-                else
-                {
-                    Snackbar.make(view, "Erro ao salvar, consulte o log!", Snackbar.LENGTH_LONG)
-                            .setAction("Ação", null).show();
-                }
+            }
+            if (sucesso)
+            {
+                DbAmigo amigo = dao.ultimoAmigo();
+                adapter.inserirAmigo(amigo);
+
+                Snackbar.make(view, "Dados de ["+nome+"] salvos com sucesso!", Snackbar.LENGTH_LONG)
+                        .setAction("Ação", null).show();
+
+                // SE NÃO FUNCIONAR, COMENTAR DESSA LINHA PRA BAIXO
+                // Inicializando os campos do contexto
+                edtNome.setText("");
+                edtCelular.setText("");
+
+                // Atualizando visibilidades
+                findViewById(R.id.include_listagem).setVisibility(View.VISIBLE);
+                findViewById(R.id.include_cadastro).setVisibility(View.INVISIBLE);
+                findViewById(R.id.fab).setVisibility(View.VISIBLE);
+
+            }
+
+            else
+            {
+                Snackbar.make(view, "Erro ao salvar, consulte o log!", Snackbar.LENGTH_LONG)
+                        .setAction("Ação", null).show();
             }
         });
 

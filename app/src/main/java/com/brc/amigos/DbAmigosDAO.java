@@ -52,6 +52,38 @@ public class DbAmigosDAO {
         return amigos;
     }
 
+    public List<DbAmigo> listarAmigosExcluidos(){
+        List<DbAmigo> amigos = new ArrayList<>();
+        Cursor cursor = gw.getDatabase().rawQuery("SELECT * FROM Amigos WHERE status <> 2", null);
+
+        while (cursor.moveToNext())
+        {
+            @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex("ID"));
+            @SuppressLint("Range") String nome = cursor.getString(cursor.getColumnIndex("Nome"));
+            @SuppressLint("Range") String celular = cursor.getString(cursor.getColumnIndex("Celular"));
+            @SuppressLint("Range") int situacao = cursor.getInt(cursor.getColumnIndex("Status"));
+            amigos.add(new DbAmigo(id, nome, celular, situacao));
+        }
+        cursor.close();
+        return amigos;
+    }
+
+//    public List<DbAmigo> listarAmigosExcluidos(){
+//        List<DbAmigo> amigos = new ArrayList<>();
+//        Cursor cursor = gw.getDatabase().rawQuery("SELECT * FROM Amigos WHERE status <> 2", null);
+//
+//        while (cursor.moveToNext())
+//        {
+//            @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex("ID"));
+//            @SuppressLint("Range") String nome = cursor.getString(cursor.getColumnIndex("Nome"));
+//            @SuppressLint("Range") String celular = cursor.getString(cursor.getColumnIndex("Celular"));
+//            @SuppressLint("Range") int situacao = cursor.getInt(cursor.getColumnIndex("Status"));
+//            amigos.add(new DbAmigo(id, nome, celular, situacao));
+//        }
+//        cursor.close();
+//        return amigos;
+//    }
+
     public DbAmigo ultimoAmigo(){
         Cursor cursor = gw.getDatabase().rawQuery("SELECT * FROM Amigos ORDER BY ID DESC", null);
         if(cursor.moveToFirst()) {
