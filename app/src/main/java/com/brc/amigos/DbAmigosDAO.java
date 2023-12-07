@@ -28,7 +28,6 @@ public class DbAmigosDAO {
         cv.put("Status", status);
         if (id > 0) {
             return gw.getDatabase().update(TABLE_AMIGOS, cv, "ID=?", new String[]{ id + "" }) > 0;
-
         } else {
             return gw.getDatabase().insert(TABLE_AMIGOS, null, cv) > 0;
         }
